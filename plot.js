@@ -20,14 +20,15 @@ var line = d3.line()
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.freq); });
 
-var plotnum=0;
+window.plotnum = 0;
+window.colors = ["#98abc5", "#ff8c00", "#8a89a6", "#d0743c", "#7b6888", "#a05d56", "#6b486b"];
 
 function plot(){
-
   var ng = document.getElementById("ngram").value;
   ng = capConvert(ng);
-  var filename = "ngramcsv/"+ng+".csv"
-  d3.csv(filename, function(d) {
+  console.log(ng);
+  console.log(plotnum);
+  d3.csv("http://nejmngrams.github.io/ngramcsv/"+ng+".csv", function(d) {
     d.date = parseTime(d.date);
     d.freq = +d.freq;
     return d;
@@ -35,7 +36,9 @@ function plot(){
     if (error) throw error;
 
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain(d3.extent(data, function(d) { return d.freq; }));
+    if (plotnum<2){
+        y.domain(d3.extent(data, function(d) { return d.freq; }));
+    }
 
     g.append("g")
         .attr("transform", "translate(0," + height + ")")
@@ -43,29 +46,32 @@ function plot(){
       .select(".domain")
         .remove();
 
-    if (plotnum<1){
-      g.append("g")
-          .call(d3.axisLeft(y))
-        .append("text")
-          .attr("fill", "#000")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 6)
-          .attr("dy", "0.71em")
-          .attr("text-anchor", "end")
-          .text("word frequency");
-    }
+    g.append("g")
+        .call(d3.axisLeft(y))
+      .append("text")
+        .attr("fill", "#000")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", "0.71em")
+        .attr("text-anchor", "end")
+        .text("word frequency");
 
     g.append("path")
         .datum(data)
         .attr("fill", "none")
-        .attr("stroke", "white").transition().duration(2000).attr("stroke","steelblue")
+        .attr("stroke", "white").transition().duration(2000).attr("stroke",colors[plotnum])
         .attr("stroke-linejoin", "round")
         .attr("stroke-linecap", "round")
         .attr("stroke-width", 1.5)
         .attr("d", line);
-   });
-   plotnum = plotnum+1;
-}
 
-//plot();
+    g.append("text")
+        .attr("transform", "translate(" + (width-30) + "," + y(data[0].freq) + ")")
+        .attr("dy", ".71em")
+        .attr("text-anchor", "start")
+        .style("fill", colors[plotnum])
+        .text(document.getElementById("ngram").value);
+   });
+   plotnum = plotnum+1
+}
 
