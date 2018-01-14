@@ -1,5 +1,5 @@
 function capConvert(s){
-    return s.replace(/([A-Z])/g, "_$1").toLowerCase(); 
+    return s.replace(/([A-Z])/g, "~$1").toLowerCase(); 
 }
 
 var svg = d3.select("svg"),
@@ -25,7 +25,7 @@ function plot(){
   var ng = document.getElementById("ngram").value;
   ng = capConvert(ng);
   console.log(ng);
-  d3.csv("ngramtsv/"+ng+".csv", function(d) {
+  d3.csv("ngramcsv/"+ng+".csv", function(d) {
     d.date = parseTime(d.date);
     d.freq = +d.freq;
     return d;
