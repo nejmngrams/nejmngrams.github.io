@@ -1,5 +1,5 @@
 function capConvert(s){
-    return s.replace(/([A-Z])/g, "~$1").toLowerCase(); 
+    return s.replace(/([A-Z])/g, "$1_").toLowerCase(); 
 }
 
 var svg = d3.select("svg"),
