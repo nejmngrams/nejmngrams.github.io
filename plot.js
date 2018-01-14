@@ -28,7 +28,7 @@ function plot(){
   ng = capConvert(ng);
   console.log(ng);
   console.log(plotnum);
-  d3.csv("http://nejmngrams.github.io/ngramcsv/"+ng+".csv", function(d) {
+  d3.csv("ngramcsv/"+ng+".csv", function(d) {
     d.date = parseTime(d.date);
     d.freq = +d.freq;
     return d;
