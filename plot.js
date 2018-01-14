@@ -20,12 +20,14 @@ var line = d3.line()
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.freq); });
 
+var plotnum=0;
 
 function plot(){
+
   var ng = document.getElementById("ngram").value;
   ng = capConvert(ng);
-  console.log(ng);
-  d3.csv("ngramcsv/"+ng+".csv", function(d) {
+  var filename = "ngramcsv/"+ng+".csv"
+  d3.csv(filename, function(d) {
     d.date = parseTime(d.date);
     d.freq = +d.freq;
     return d;
@@ -41,15 +43,17 @@ function plot(){
       .select(".domain")
         .remove();
 
-    g.append("g")
-        .call(d3.axisLeft(y))
-      .append("text")
-        .attr("fill", "#000")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", "0.71em")
-        .attr("text-anchor", "end")
-        .text("word frequency");
+    if (plotnum<1){
+      g.append("g")
+          .call(d3.axisLeft(y))
+        .append("text")
+          .attr("fill", "#000")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", "0.71em")
+          .attr("text-anchor", "end")
+          .text("word frequency");
+    }
 
     g.append("path")
         .datum(data)
@@ -60,6 +64,7 @@ function plot(){
         .attr("stroke-width", 1.5)
         .attr("d", line);
    });
+   plotnum = plotnum+1;
 }
 
 //plot();
