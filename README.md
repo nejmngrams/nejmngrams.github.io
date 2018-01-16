@@ -6,6 +6,8 @@ This project provides a fresh dataset to the field of culturomics from a unique 
 
 A. Online tool to visualize 1-gram (word) frequencies over time: nejmngrams.github.io. Using this tool you can plot multiple 1-grams on the same axes, just input new words into the text box and hit search.
 
+![alt text](example.png)
+
 B. Code for 1. generating links to all pdfs of the NEJM articles from 1812 to 2017 and downloading these files 2. convert pdfs to txt files using either pdfminer or tesseract 3. compiling text into n-grams
 
 C. Raw data for individual 1-grams that appear over 100 times total throughout the entire archive that are comprised of alphanumeric characters or dashes.
