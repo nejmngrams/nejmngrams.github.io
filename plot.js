@@ -66,7 +66,7 @@ function plot(){
         .attr("d", line);
 
     g.append("text")
-        .attr("transform", "translate(" + (width-30) + "," + y(data[0].freq) + ")")
+        .attr("transform", "translate(" + (width-40) + "," + y(data[0].freq) + ")")
         .attr("dy", ".71em")
         .attr("text-anchor", "start")
         .style("fill", colors[plotnum])
